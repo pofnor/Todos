@@ -54,6 +54,7 @@ function ReducerSaved() {
     return storedTodos ? JSON.parse(storedTodos) : initial
   })
   const [name,setName] = useState('')
+  const [open,setOpen] = useState(true)
   const inputRef = useRef()
 
   useEffect(() => {
@@ -61,8 +62,11 @@ function ReducerSaved() {
   }, [todos])
 
   useEffect(()=>{
-    inputRef.current.focus()
-  })
+    if(open) {
+      inputRef.current.focus()
+      setOpen(false)
+    }
+  },[open])
 
   function handleSubmit(e){
     e.preventDefault()
