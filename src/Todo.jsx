@@ -1,21 +1,37 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ACTIONS } from './ReducerSaved'
 import { BUTTON_STYLE } from './ReducerSaved'
 import { CheckCircle, Circle, Edit2, MessageCircle, Trash2 } from 'lucide-react'
 
-export default function Todo({todo, name, dispatch}) {
+export default function Todo({todo, dispatch, inputRef}) {
   const [editComment, setEditComment] = useState(false)  
-  const [editName, setEditName] = useState(false)  
+  const [editName, setEditName] = useState(false)
+  const inputNameRef = useRef()
+  const inputEditRef = useRef()
+
+  useEffect(()=>{
+    if(editName && inputNameRef.current) {
+      inputNameRef.current.focus()
+    }
+    if(editComment && inputEditRef.current) {
+      inputEditRef.current.focus()
+    }
+  },[editName, editComment])
+
   return (
     <div className='flex justify-between items-center max-w-[680px] w-full border border-gray-600'>
       <div>
         {editName ?
-          <form onSubmit={()=>setEditName(!editName)}>
-            <input 
+          <form onSubmit={()=>{
+            setEditName(!editName)
+            inputRef.current.focus()
+            }}>
+            <input
+            ref={inputNameRef} 
             type="text"
             className='text-center w-full max-w-[200px] whitespace-nowrap overflow-hidden overflow-ellipsis' 
             value={todo.name}
-            onChange={(e)=>{              
+            onChange={(e)=>{
               dispatch({type:ACTIONS.EDIT_TODO, payload: {id:todo.id, name:e.target.value}})
             }}
             />
@@ -25,8 +41,12 @@ export default function Todo({todo, name, dispatch}) {
         }
       </div>
         {editComment ?
-          <form onSubmit={()=>setEditComment(!editComment)}>
-            <input 
+          <form onSubmit={()=>{
+            setEditComment(!editComment)
+            inputRef.current.focus()
+            }}>
+            <input
+              ref={inputEditRef}
               type="text"
               className='text-center w-full max-w-[200px] whitespace-nowrap overflow-hidden overflow-ellipsis' 
               value={todo.comment}
@@ -43,11 +63,17 @@ export default function Todo({todo, name, dispatch}) {
           className={BUTTON_STYLE}>{!todo.complete && <Circle/>}{todo.complete && <CheckCircle/>}
         </button>
         <button
-          onClick={()=>setEditComment(!editComment)}
+          onClick={()=>{
+            setEditComment(!editComment)
+            editComment && inputRef.current.focus()
+          }}
           className={BUTTON_STYLE}><MessageCircle/>
         </button>
         <button
-          onClick={()=>setEditName(!editName)}
+          onClick={ () =>{ 
+            setEditName(!editName)
+            editName && inputRef.current.focus()
+          }}
           className={BUTTON_STYLE}><Edit2/>
         </button>
         <button

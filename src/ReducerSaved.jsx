@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect } from "react"
+import { useReducer, useState, useEffect, useRef } from "react"
 import Todo from "./Todo"
 import { Plus } from "lucide-react"
 
@@ -54,6 +54,7 @@ function ReducerSaved() {
     return storedTodos ? JSON.parse(storedTodos) : initial
   })
   const [name,setName] = useState('')
+  const inputRef = useRef()
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -68,7 +69,8 @@ function ReducerSaved() {
   return (
     <>
     <form onSubmit={handleSubmit} className="flex justify-center items-center mt-4 mb-4">
-      <input 
+      <input
+        ref={inputRef}
         type="text"
         value={name} 
         onChange={e=>setName(e.target.value)}
@@ -82,7 +84,7 @@ function ReducerSaved() {
     </form>
     <div className="flex flex-col justify-center items-center gap-4">
       {todos.map(todo=>{
-        return <Todo key={todo.id} name={name} todo={todo} dispatch={dispatch}/>
+        return <Todo key={todo.id} todo={todo} dispatch={dispatch} inputRef={inputRef}/>
       })}
     </div>
     </>
