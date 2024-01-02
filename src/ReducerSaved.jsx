@@ -60,6 +60,10 @@ function ReducerSaved() {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos])
 
+  useEffect(()=>{
+    inputRef.current.focus()
+  })
+
   function handleSubmit(e){
     e.preventDefault()
     dispatch({type:ACTIONS.ADD_TODO, payload: {name:name}})
