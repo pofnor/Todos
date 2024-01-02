@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { ACTIONS } from './Reducer'
-import { BUTTON_STYLE } from './Reducer'
+import { useState } from 'react'
+import { ACTIONS } from './ReducerSaved'
+import { BUTTON_STYLE } from './ReducerSaved'
 import { CheckCircle, Circle, Edit2, MessageCircle, Trash2 } from 'lucide-react'
 
 export default function Todo({todo, name, dispatch}) {

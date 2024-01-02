@@ -1,8 +1,6 @@
 import { useReducer, useState, useEffect } from "react"
 import Todo from "./Todo"
-import { Link } from "react-router-dom"
 import { Plus } from "lucide-react"
-import { BUTTON_STYLE } from "./Reducer"
 
 export const ACTIONS = {
   ADD_TODO : 'add-todo',
@@ -11,6 +9,8 @@ export const ACTIONS = {
   ADD_COMMENT : 'add-comment',
   EDIT_TODO : 'edit-todo'
 }
+
+export const BUTTON_STYLE = 'text-white text-xl px-1 h-12 active:text-amber-300 active:border-amber-300 hover:text-amber-400 hover:border-amber-400'
 
 function reducer(todos,action) {
   switch (action.type) {
@@ -67,22 +67,6 @@ function ReducerSaved() {
 
   return (
     <>
-    {/* <div className='flex flex-col mt-16 justify-center items-center text-gray-300 font-bold text-xl'>
-      Switch to
-      <Link 
-        className='text-gray-300 font-bold text-lg hover:text-amber-400'
-        to='/noreducer'
-      >
-        No Reducer
-      </Link>
-      <Link 
-        className='text-gray-300 font-bold text-lg hover:text-amber-400'
-        to='/'
-      >
-        Reducer
-      </Link>
-      <h1 className="mt-10 text-amber-400">- Reducer Saved Version -</h1>
-    </div> */}
     <form onSubmit={handleSubmit} className="flex justify-center items-center mt-4 mb-4">
       <input 
         type="text"
